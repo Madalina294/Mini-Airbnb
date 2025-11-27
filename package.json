@@ -1,0 +1,28 @@
+{
+  "name": "mini-airbnb",
+  "version": "1.0.0",
+  "description": "Mini-Airbnb Booking Platform - Microservices Architecture",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "frontend"
+  ],
+  "scripts": {
+    "dev:gateway": "npm run dev --workspace=packages/api-gateway",
+    "dev:auth": "npm run dev --workspace=packages/auth-service",
+    "dev:property": "npm run dev --workspace=packages/property-service",
+    "dev:booking": "npm run dev --workspace=packages/booking-service",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspaces",
+    "install:all": "npm install"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.10.6"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
+
