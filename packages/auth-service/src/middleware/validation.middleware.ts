@@ -16,7 +16,7 @@ export const validate = (schema: z.ZodSchema) => {
           field: err.path.join('.'),
           message: err.message,
         }));
-        throw new BadRequestError(`Validation failed: ${JSON.stringify(errors)}`);
+        next(new BadRequestError(`Validation failed: ${JSON.stringify(errors)}`));
       }
       next(error);
     }
