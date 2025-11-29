@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Property {
+  id          String   @id @default(uuid())
+  title       String
+  description String   @db.Text  // Text pentru descrieri lungi
+  price       Float    // Preț per noapte
+  address     String
+  city        String
+  country     String
+  bedrooms    Int      // Număr întreg de camere
+  bathrooms   Int      // Adaugă și băi (util)
+  maxGuests   Int      // Număr maxim de oaspeți
+  facilities  String[]  // Array de facilități (WiFi, Parking, etc.)
+  userId      String   // ID-ul user-ului (HOST) - referință către Auth Service
+  status      Status   @default(AVAILABLE)
+  images      String[] // Array de URL-uri pentru imagini
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("properties")
+  @@index([userId])      // Index pentru căutări rapide după user
+  @@index([city])        // Index pentru căutări după oraș
+  @@index([status])      // Index pentru filtrare după status
+}
+
+enum Status {
+  AVAILABLE
+  RESERVED
+  UNAVAILABLE  // Adaugă și unavailable pentru proprietăți dezactivate
+}
