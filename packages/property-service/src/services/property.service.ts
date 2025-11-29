@@ -9,7 +9,10 @@ import {
 import { NotFoundError, UnauthorizedError } from '../utils/errors.utils';
 
 export class PropertyService {
-  constructor(private propertyRepository: PropertyRepository) { }
+  private propertyRepository: PropertyRepository;
+  constructor(private prisma: PrismaClient) {
+  this.propertyRepository = new PropertyRepository(prisma);
+}
 
   async create(dto: CreatePropertyDto, userId: string): Promise<PropertyResponse> {
     const property = await this.propertyRepository.create({
