@@ -9,7 +9,7 @@ dotenv.config();
 
 // Entry Point - similar cu Application.java în Spring Boot
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT_AUTH || 3001;
 
 // Prisma Client (singleton)
 const prisma = new PrismaClient();

@@ -1,20 +1,24 @@
-import { PrismaClient, Property, Status } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { PropertyQuery } from '../types/property.types';
 
 // Repository Pattern - similar cu JpaRepository în Spring
 
 export class PropertyRepository {
-  constructor(private prisma: PrismaClient) {}
+  private prisma: PrismaClient;
+
+  constructor(prisma: PrismaClient) {
+    this.prisma = prisma;
+  }
 
   // Găsește proprietate după ID
-  async findById(id: string): Promise<Property | null> {
+  async findById(id: string) {
     return this.prisma.property.findUnique({
       where: { id },
     });
   }
 
   // Găsește toate proprietățile unui user
-  async findByUserId(userId: string): Promise<Property[]> {
+  async findByUserId(userId: string) {
     return this.prisma.property.findMany({
       where: { userId },
       orderBy: { createdAt: 'desc' },
@@ -22,7 +26,7 @@ export class PropertyRepository {
   }
 
   // Căutare cu filtre
-  async search(query: PropertyQuery): Promise<Property[]> {
+  async search(query: PropertyQuery) {
     const where: any = {};
 
     if (query.city) {
@@ -73,14 +77,14 @@ export class PropertyRepository {
     facilities: string[];
     images: string[];
     userId: string;
-  }): Promise<Property> {
+  }) {
     return this.prisma.property.create({
       data,
     });
   }
 
   // Actualizează o proprietate
-  async update(id: string, data: Partial<Property>): Promise<Property> {
+  async update(id: string, data: any) {
     return this.prisma.property.update({
       where: { id },
       data,
@@ -88,7 +92,7 @@ export class PropertyRepository {
   }
 
   // Șterge o proprietate
-  async delete(id: string): Promise<Property> {
+  async delete(id: string) {
     return this.prisma.property.delete({
       where: { id },
     });

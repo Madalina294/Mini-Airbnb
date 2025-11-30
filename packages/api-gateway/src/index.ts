@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import { createAuthRoutes } from './routes/auth.routes';
+import { createPropertyRoutes } from './routes/property.routes';  
 import { errorHandler } from './middleware/error.middleware';
 
 // Încarcă variabilele de mediu
@@ -34,6 +35,7 @@ app.get('/health', (req, res) => {
 
 // Routes - toate route-urile vor fi prefixate cu /api
 app.use('/api/auth', createAuthRoutes());
+app.use('/api/properties', createPropertyRoutes());
 
 // Error Handler (trebuie să fie ultimul middleware!)
 app.use(errorHandler);

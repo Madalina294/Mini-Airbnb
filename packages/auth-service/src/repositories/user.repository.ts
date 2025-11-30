@@ -1,18 +1,22 @@
-import { PrismaClient, User } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 // Repository Pattern - similar cu JpaRepository în Spring
 export class UserRepository {
-  constructor(private prisma: PrismaClient) {}
+  private prisma: PrismaClient;
+
+  constructor(prisma: PrismaClient) {
+    this.prisma = prisma;
+  }
 
   // Găsește user după email
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string) {
     return this.prisma.user.findUnique({
       where: { email },
     });
   }
 
   // Găsește user după ID
-  async findById(id: string): Promise<User | null> {
+  async findById(id: string) {
     return this.prisma.user.findUnique({
       where: { id },
     });
@@ -24,7 +28,7 @@ export class UserRepository {
     password: string;
     firstName: string;
     lastName: string;
-  }): Promise<User> {
+  }) {
     return this.prisma.user.create({
       data,
     });
