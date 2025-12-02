@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../node_modules/.prisma/booking-client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Booking {
+  id                String        @id @default(uuid())
+  propertyId        String        // Referință către Property Service
+  userId            String        // Guest ID - referință către Auth Service
+  checkIn           DateTime
+  checkOut          DateTime
+  totalPrice        Float
+  guests            Int
+  status            BookingStatus @default(PENDING)
+  
+  // Câmpuri opționale
+  guestName         String?       // Numele complet al guest-ului
+  guestEmail        String?       // Email pentru confirmări
+  guestPhone        String?       // Telefon de contact
+  specialRequests   String?       @db.Text // Cerințe speciale
+  cancellationReason String?      @db.Text // Motiv anulare
+  cancelledAt       DateTime?     // Când a fost anulată
+  confirmedAt       DateTime?     // Când a fost confirmată
+  
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  @@map("bookings")
+  @@index([propertyId])           // Căutări după proprietate
+  @@index([userId])                // Căutări după user
+  @@index([status])                // Filtrare după status
+  @@index([checkIn, checkOut])      // Verificare disponibilitate (overlap)
+}
+
+enum BookingStatus {
+  PENDING      // Rezervare în așteptare (default)
+  CONFIRMED    // Rezervare confirmată
+  CANCELLED    // Rezervare anulată
+  COMPLETED    // Rezervare finalizată (după check-out)
+}
