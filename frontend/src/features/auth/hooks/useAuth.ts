@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { useAuthStore } from '../stores/useAuthStore';
 import { login, register, validateToken, mapBackendUserToUser as mapUser } from '../api/auth.api';
 import type { LoginRequest, RegisterRequest } from '../api/auth.api';
-import { useEffect } from 'react';
 
 // Query Keys - Identificatori unici pentru cache
 export const authKeys = {
