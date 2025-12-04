@@ -1,6 +1,7 @@
-import { LoginForm, useAuthStore } from '../features/auth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './LoginPage.css';
+import { LoginForm, useAuthStore } from '../../features/auth';
 
 /**
  * LoginPage - Pagina de login
@@ -13,14 +14,20 @@ export const LoginPage = () => {
   // Redirect dacă utilizatorul este deja autentificat
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/');
+      navigate('/home');
     }
   }, [isAuthenticated, navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md">
-        <LoginForm />
+    <div className="loginPage">
+      <div className="loginContainer">
+        <div className="loginCard">
+          <div className="loginHeader">
+            <h2 className="loginTitle">Welcome back</h2>
+            <p className="loginSubtitle">Sign in to your account</p>
+          </div>
+          <LoginForm />
+        </div>
       </div>
     </div>
   );

@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useLogin } from '../hooks/useAuth';
-import { Input } from '../../../components/ui/Input';
-import { Button } from '../../../components/ui/Button';
 import type { LoginRequest } from '../api/auth.api';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * LoginForm Component
@@ -19,6 +18,7 @@ export const LoginForm = () => {
 
   // Hook pentru login mutation
   const loginMutation = useLogin();
+  const navigate = useNavigate();
 
   // Handler pentru input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,6 +60,10 @@ export const LoginForm = () => {
 
     // Apelează mutation-ul
     loginMutation.mutate(formData, {
+      onSuccess: () => {
+        // Redirect către home după login reușit
+        navigate('/home');
+      },
       onError: (error: any) => {
         // Gestionează eroarea (ex: email sau parolă greșită)
         const errorMessage = error?.response?.data?.error?.message || 'Login failed';
@@ -69,45 +73,70 @@ export const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md mx-auto">
-      <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+    <form onSubmit={handleSubmit} className="loginForm">
+      <div className="formGroup">
+        <label htmlFor="email" className="formLabel">
+          Email
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="your.email@example.com"
+          className={`formInput ${errors.email ? 'border-red-500' : ''}`}
+          required
+        />
+        {errors.email && (
+          <span className="formError">{errors.email}</span>
+        )}
+      </div>
 
-      <Input
-        type="email"
-        name="email"
-        label="Email"
-        value={formData.email}
-        onChange={handleChange}
-        error={errors.email}
-        placeholder="your.email@example.com"
-        required
-      />
-
-      <Input
-        type="password"
-        name="password"
-        label="Password"
-        value={formData.password}
-        onChange={handleChange}
-        error={errors.password}
-        placeholder="Enter your password"
-        required
-      />
+      <div className="formGroup">
+        <label htmlFor="password" className="formLabel">
+          Password
+        </label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="Enter your password"
+          className={`formInput ${errors.password ? 'border-red-500' : ''}`}
+          required
+        />
+        {errors.password && (
+          <span className="formError">{errors.password}</span>
+        )}
+      </div>
 
       {loginMutation.isError && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-          {loginMutation.error?.message || 'An error occurred'}
+        <div className="errorMessage">
+          {loginMutation.error?.message || 'An error occurred. Please try again.'}
         </div>
       )}
 
-      <Button
+      <button
         type="submit"
-        variant="primary"
-        isLoading={loginMutation.isPending}
-        className="w-full"
+        className={`loginButton ${loginMutation.isPending ? 'loading' : ''}`}
+        disabled={loginMutation.isPending}
       >
-        Login
-      </Button>
+        {loginMutation.isPending ? 'Signing in...' : 'Sign In'}
+      </button>
+
+      <div className="loginFooter">
+        <p className="loginFooterText">
+          Don't have an account?{' '}
+          <a href="/register" className="registerLink" onClick={(e) => {
+            e.preventDefault();
+            navigate('/register');
+          }}>
+            Sign up
+          </a>
+        </p>
+      </div>
     </form>
   );
 };

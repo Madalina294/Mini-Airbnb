@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useRegister } from '../hooks/useAuth';
-import { Input } from '../../../components/ui/Input';
-import { Button } from '../../../components/ui/Button';
 import type { RegisterRequest } from '../api/auth.api';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * RegisterForm Component
@@ -18,6 +17,7 @@ export const RegisterForm = () => {
   const [errors, setErrors] = useState<Partial<Record<keyof RegisterRequest, string>>>({});
 
   const registerMutation = useRegister();
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -62,6 +62,10 @@ export const RegisterForm = () => {
     }
 
     registerMutation.mutate(formData, {
+      onSuccess: () => {
+        // Redirect către home după register reușit
+        navigate('/home');
+      },
       onError: (error: any) => {
         const errorMessage = error?.response?.data?.error?.message || 'Registration failed';
         if (errorMessage.includes('Email')) {
@@ -74,69 +78,110 @@ export const RegisterForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md mx-auto">
-      <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
+    <form onSubmit={handleSubmit} className="registerForm">
+      <div className="formRow">
+        <div className="formGroup">
+          <label htmlFor="firstName" className="formLabel">
+            First Name
+          </label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            placeholder="John"
+            className={`formInput ${errors.firstName ? 'border-red-500' : ''}`}
+            required
+          />
+          {errors.firstName && (
+            <span className="formError">{errors.firstName}</span>
+          )}
+        </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <Input
-          type="text"
-          name="firstName"
-          label="First Name"
-          value={formData.firstName}
-          onChange={handleChange}
-          error={errors.firstName}
-          placeholder="John"
-          required
-        />
-
-        <Input
-          type="text"
-          name="lastName"
-          label="Last Name"
-          value={formData.lastName}
-          onChange={handleChange}
-          error={errors.lastName}
-          placeholder="Doe"
-          required
-        />
+        <div className="formGroup">
+          <label htmlFor="lastName" className="formLabel">
+            Last Name
+          </label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            placeholder="Doe"
+            className={`formInput ${errors.lastName ? 'border-red-500' : ''}`}
+            required
+          />
+          {errors.lastName && (
+            <span className="formError">{errors.lastName}</span>
+          )}
+        </div>
       </div>
 
-      <Input
-        type="email"
-        name="email"
-        label="Email"
-        value={formData.email}
-        onChange={handleChange}
-        error={errors.email}
-        placeholder="your.email@example.com"
-        required
-      />
+      <div className="formGroup">
+        <label htmlFor="email" className="formLabel">
+          Email
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="your.email@example.com"
+          className={`formInput ${errors.email ? 'border-red-500' : ''}`}
+          required
+        />
+        {errors.email && (
+          <span className="formError">{errors.email}</span>
+        )}
+      </div>
 
-      <Input
-        type="password"
-        name="password"
-        label="Password"
-        value={formData.password}
-        onChange={handleChange}
-        error={errors.password}
-        placeholder="Enter your password"
-        required
-      />
+      <div className="formGroup">
+        <label htmlFor="password" className="formLabel">
+          Password
+        </label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="Enter your password"
+          className={`formInput ${errors.password ? 'border-red-500' : ''}`}
+          required
+        />
+        {errors.password && (
+          <span className="formError">{errors.password}</span>
+        )}
+      </div>
 
       {registerMutation.isError && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-          {registerMutation.error?.message || 'An error occurred'}
+        <div className="errorMessage">
+          {registerMutation.error?.message || 'An error occurred. Please try again.'}
         </div>
       )}
 
-      <Button
+      <button
         type="submit"
-        variant="primary"
-        isLoading={registerMutation.isPending}
-        className="w-full"
+        className={`registerButton ${registerMutation.isPending ? 'loading' : ''}`}
+        disabled={registerMutation.isPending}
       >
-        Register
-      </Button>
+        {registerMutation.isPending ? 'Creating account...' : 'Create Account'}
+      </button>
+
+      <div className="registerFooter">
+        <p className="registerFooterText">
+          Already have an account?{' '}
+          <a href="/login" className="loginLink" onClick={(e) => {
+            e.preventDefault();
+            navigate('/login');
+          }}>
+            Sign in
+          </a>
+        </p>
+      </div>
     </form>
   );
 };

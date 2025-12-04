@@ -1,4 +1,4 @@
-import { useAuthStore, useLogout } from '../features/auth';
+import { useAuthStore, useLogout } from '../../features/auth';
 import { useNavigate } from 'react-router-dom';
 import './HomePage.css';
 
