@@ -1,0 +1,61 @@
+/* PropertyList Styles */
+
+.propertyList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+@media (max-width: 640px) {
+    .propertyList {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+.propertyListLoading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    color: #6b7280;
+}
+
+.loadingSpinner {
+    width: 3rem;
+    height: 3rem;
+    border: 4px solid #e5e7eb;
+    border-top-color: #f43f5e;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.propertyListError {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #dc2626;
+}
+
+.propertyListError p {
+    margin: 0.5rem 0;
+}
+
+.propertyListEmpty {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #6b7280;
+}
+
+.propertyListEmpty p {
+    margin: 0.5rem 0;
+    font-size: 1.125rem;
+}

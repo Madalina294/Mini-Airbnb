@@ -1,0 +1,99 @@
+/* ImageUpload Styles */
+
+.imageUpload {
+    width: 100%;
+}
+
+.imageUploadGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.imageUploadItem {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    border: 2px solid #e5e7eb;
+}
+
+.imageUploadItem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.imageUploadRemove {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: rgba(220, 38, 38, 0.9);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.imageUploadRemove:hover {
+    background-color: rgba(220, 38, 38, 1);
+}
+
+.imageUploadAdd {
+    aspect-ratio: 1;
+    border: 2px dashed #d1d5db;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: #f9fafb;
+}
+
+.imageUploadAdd:hover {
+    border-color: #f43f5e;
+    background-color: #fdf2f8;
+}
+
+.imageUploadPlaceholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6b7280;
+}
+
+.imageUploadPlaceholder span:first-child {
+    font-size: 2rem;
+    font-weight: 300;
+}
+
+.imageUploadPlaceholder span:last-child {
+    font-size: 0.875rem;
+}
+
+.imageUploadLoading {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.imageUploadError {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.imageUploadHint {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}

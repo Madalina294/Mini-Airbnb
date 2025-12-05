@@ -1,4 +1,13 @@
 import { z } from 'zod';
+import { isCloudinaryUrl } from '../utils/cloudinary.utils';
+
+// Custom validator pentru Cloudinary URLs
+const cloudinaryUrlSchema = z.string().url('Invalid image URL').refine(
+  (url) => isCloudinaryUrl(url),
+  {
+    message: 'Image URL must be from Cloudinary',
+  }
+);
 
 // Schema pentru Create Property
 export const createPropertySchema = z.object({
@@ -12,8 +21,7 @@ export const createPropertySchema = z.object({
   bathrooms: z.number().int().min(1, 'Bathrooms must be at least 1'),
   maxGuests: z.number().int().min(1, 'Max guests must be at least 1'),
   facilities: z.array(z.string()).min(1, 'At least one facility is required'),
-  images: z.array(z.string().url('Invalid image URL')).optional(),
-});
+  images: z.array(cloudinaryUrlSchema).optional(),});
 
 // Schema pentru Update Property
 export const updatePropertySchema = z.object({
@@ -27,7 +35,7 @@ export const updatePropertySchema = z.object({
   bathrooms: z.number().int().min(1).optional(),
   maxGuests: z.number().int().min(1).optional(),
   facilities: z.array(z.string()).optional(),
-  images: z.array(z.string().url()).optional(),
+  images: z.array(cloudinaryUrlSchema).optional(),
   status: z.enum(['AVAILABLE', 'RESERVED', 'UNAVAILABLE']).optional(),
 });
 

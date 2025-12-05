@@ -90,7 +90,8 @@ export const HomePage = () => {
                 <p className="actionDescription">
                   Explore amazing places to stay around the world
                 </p>
-                <button className="btnFull btnBlue">
+                <button className="btnFull btnBlue"
+                onClick={() => navigate('/properties')}>
                   Explore Now
                 </button>
               </div>

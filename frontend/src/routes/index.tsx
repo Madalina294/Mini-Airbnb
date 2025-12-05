@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import { HomePage } from '../pages/Home/HomePage';
 import { LoginPage } from '../pages/Login/LoginPage';
 import { RegisterPage } from '../pages/Register/RegisterPage';
+import { PropertiesPage } from '../pages/Properties/PropertiesPage';
 
 /**
  * Configurarea rutelor aplicației
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
   {
     path: '/register',
     element: <RegisterPage />,
+  },
+  {
+    path: '/properties',
+    element: <PropertiesPage />,
   },
 ]);
 

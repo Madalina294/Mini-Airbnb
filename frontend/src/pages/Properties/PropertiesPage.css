@@ -1,0 +1,130 @@
+/* PropertiesPage Styles */
+
+.propertiesPage {
+    min-height: 100vh;
+    background-color: #f9fafb;
+}
+
+.propertiesPageHeader {
+    background: linear-gradient(to right, #f43f5e, #ec4899);
+    color: #ffffff;
+    padding: 3rem 1rem;
+}
+
+.propertiesPageHeaderContent {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .propertiesPageHeaderContent {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+}
+
+.propertiesPageTitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    .propertiesPageTitle {
+        font-size: 3rem;
+    }
+}
+
+.propertiesPageSubtitle {
+    font-size: 1.125rem;
+    color: #fce7f3;
+    margin: 0;
+}
+
+.propertiesPageCreateButton {
+    padding: 0.75rem 1.5rem;
+    background-color: #ffffff;
+    color: #f43f5e;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+}
+
+.propertiesPageCreateButton:hover {
+    background-color: #f9fafb;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.15);
+}
+
+.propertiesPageContent {
+    padding: 2rem 1rem;
+}
+
+.propertiesPageContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.propertiesPageResults {
+    margin-top: 2rem;
+}
+
+.propertiesPageResultsHeader {
+    margin-bottom: 1.5rem;
+}
+
+.propertiesPageResultsCount {
+    font-size: 1.125rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.propertiesPagePagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding: 2rem 0;
+}
+
+.propertiesPagePaginationButton {
+    padding: 0.625rem 1.25rem;
+    background-color: #ffffff;
+    color: #374151;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.propertiesPagePaginationButton:hover:not(:disabled) {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.propertiesPagePaginationButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.propertiesPagePaginationInfo {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+}

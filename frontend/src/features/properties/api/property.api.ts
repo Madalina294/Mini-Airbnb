@@ -55,14 +55,9 @@ interface PropertyResponse {
 
 interface PropertiesListResponse {
   success: boolean;
-  data: {
-    properties: PropertyResponse['data'][];
-    total: number;
-    page: number;
-    limit: number;
-    totalPages: number;
-  };
+  data: PropertyResponse['data'][]; // Array direct, nu obiect cu pagination
 }
+
 
 // API Functions
 
@@ -72,12 +67,12 @@ interface PropertiesListResponse {
  */
 export const searchProperties = async (
   params?: SearchPropertiesParams
-): Promise<PropertiesListResponse['data']> => {
+): Promise<PropertyResponse['data'][]> => {  // Returnează array direct
   const queryParams = new URLSearchParams();
   
   if (params) {
     Object.entries(params).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
+      if (value !== undefined && value !== null && value !== '') {
         queryParams.append(key, String(value));
       }
     });
@@ -89,7 +84,7 @@ export const searchProperties = async (
     : '/properties/search';
 
   const response = (await axiosInstance.get(url)) as unknown as PropertiesListResponse;
-  return response.data;
+  return response.data; // Returnează array-ul direct
 };
 
 /**
