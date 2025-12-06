@@ -113,7 +113,8 @@ export const HomePage = () => {
                 <p className="actionDescription">
                   Share your space with travelers worldwide
                 </p>
-                <button className="btnFull btnPurple">
+                <button className="btnFull btnPurple"
+                onClick={() => navigate('/properties/create')}>
                   Become a Host
                 </button>
               </div>

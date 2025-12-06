@@ -4,6 +4,7 @@ import { LoginPage } from '../pages/Login/LoginPage';
 import { RegisterPage } from '../pages/Register/RegisterPage';
 import { PropertiesPage } from '../pages/Properties/PropertiesPage';
 import { CreatePropertyPage } from '../pages/Properties/CreatePropertyPage';
+import { PropertyDetailsPage } from '../pages/Properties/PropertyDetailsPage';
 
 /**
  * Configurarea rutelor aplicației
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
   {
     path: '/properties/create',
     element: <CreatePropertyPage />,
+  },
+  {
+    path: '/properties/:id',
+    element: <PropertyDetailsPage />,
   },
 ]);
 

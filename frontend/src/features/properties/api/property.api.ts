@@ -47,7 +47,7 @@ interface PropertyResponse {
     facilities: string[];
     images: string[];
     status: string;
-    ownerId: string;
+    userId: string; // Backend returnează userId, nu ownerId
     createdAt: string;
     updatedAt: string;
   };
