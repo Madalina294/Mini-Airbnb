@@ -1,0 +1,214 @@
+/* CreatePropertyForm Styles */
+
+.createPropertyForm {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.createPropertyFormSection {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.createPropertyFormSectionTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.createPropertyFormGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.createPropertyFormGroup:last-child {
+    margin-bottom: 0;
+}
+
+.createPropertyFormLabel {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.required {
+    color: #ef4444;
+}
+
+.createPropertyFormInput,
+.createPropertyFormTextarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.2s;
+    background-color: #ffffff;
+    color: #111827;
+    font-family: inherit;
+}
+
+.createPropertyFormInput:focus,
+.createPropertyFormTextarea:focus {
+    outline: none;
+    border-color: #f43f5e;
+    box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.1);
+}
+
+.createPropertyFormInput.error,
+.createPropertyFormTextarea.error {
+    border-color: #ef4444;
+}
+
+.createPropertyFormTextarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.createPropertyFormRow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+@media (max-width: 640px) {
+    .createPropertyFormRow {
+        grid-template-columns: 1fr;
+    }
+}
+
+.createPropertyFormError {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.createPropertyFormFacilities {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
+}
+
+.createPropertyFormFacility {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: #ffffff;
+}
+
+.createPropertyFormFacility:hover {
+    border-color: #f43f5e;
+    background-color: #fdf2f8;
+}
+
+.createPropertyFormFacility input[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
+    accent-color: #f43f5e;
+}
+
+.createPropertyFormFacility span {
+    font-size: 0.875rem;
+    color: #374151;
+    user-select: none;
+}
+
+.createPropertyFormFacility input[type="checkbox"]:checked+span {
+    font-weight: 500;
+    color: #f43f5e;
+}
+
+.createPropertyFormErrorBox {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.createPropertyFormActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.createPropertyFormButtonCancel,
+.createPropertyFormButtonSubmit {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.createPropertyFormButtonCancel {
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.createPropertyFormButtonCancel:hover {
+    background-color: #e5e7eb;
+}
+
+.createPropertyFormButtonSubmit {
+    background: linear-gradient(to right, #f43f5e, #ec4899);
+    color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.createPropertyFormButtonSubmit:hover:not(:disabled) {
+    background: linear-gradient(to right, #e11d48, #db2777);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px);
+}
+
+.createPropertyFormButtonSubmit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.createPropertyFormButtonSubmit.loading {
+    position: relative;
+    color: transparent;
+}
+
+.createPropertyFormButtonSubmit.loading::after {
+    content: '';
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    top: 50%;
+    left: 50%;
+    margin-left: -0.5rem;
+    margin-top: -0.5rem;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

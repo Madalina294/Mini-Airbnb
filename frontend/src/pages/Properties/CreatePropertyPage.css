@@ -1,0 +1,47 @@
+/* CreatePropertyPage Styles */
+
+.createPropertyPage {
+    min-height: 100vh;
+    background-color: #f9fafb;
+}
+
+.createPropertyPageHeader {
+    background: linear-gradient(to right, #f43f5e, #ec4899);
+    color: #ffffff;
+    padding: 3rem 1rem;
+}
+
+.createPropertyPageHeaderContent {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+.createPropertyPageTitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+}
+
+@media (min-width: 768px) {
+    .createPropertyPageTitle {
+        font-size: 3rem;
+    }
+}
+
+.createPropertyPageSubtitle {
+    font-size: 1.125rem;
+    color: #fce7f3;
+    margin: 0;
+}
+
+.createPropertyPageContent {
+    padding: 2rem 1rem;
+}
+
+.createPropertyPageContainer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
