@@ -102,7 +102,8 @@ export const HomePage = () => {
                 <p className="actionDescription">
                   View and manage your upcoming trips
                 </p>
-                <button className="btnFull btnGreen">
+                <button className="btnFull btnGreen"
+                onClick={() => navigate('/bookings')}>
                   View Bookings
                 </button>
               </div>

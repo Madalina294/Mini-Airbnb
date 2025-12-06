@@ -1,0 +1,186 @@
+/* CancelBookingDialog Styles */
+
+.cancelBookingDialogOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  /* Previne orice interacțiune cu elementele din spate */
+  isolation: isolate;
+}
+
+.cancelBookingDialog {
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 500px;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  /* Asigură că dialog-ul este deasupra overlay-ului */
+  z-index: 10000;
+}
+
+.cancelBookingDialogHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cancelBookingDialogTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.cancelBookingDialogCloseButton {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancelBookingDialogCloseButton:hover:not(:disabled) {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.cancelBookingDialogCloseButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cancelBookingDialogForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.cancelBookingDialogContent {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cancelBookingDialogMessage {
+  color: #4b5563;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.cancelBookingDialogField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cancelBookingDialogLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.cancelBookingDialogRequired {
+  color: #dc2626;
+}
+
+.cancelBookingDialogTextarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 100px;
+  transition: all 0.2s;
+}
+
+.cancelBookingDialogTextarea:focus {
+  outline: none;
+  border-color: #f43f5e;
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.1);
+}
+
+.cancelBookingDialogTextarea.error {
+  border-color: #dc2626;
+}
+
+.cancelBookingDialogTextarea:disabled {
+  background-color: #f9fafb;
+  cursor: not-allowed;
+}
+
+.cancelBookingDialogError {
+  font-size: 0.75rem;
+  color: #dc2626;
+}
+
+.cancelBookingDialogHint {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.cancelBookingDialogActions {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.cancelBookingDialogCancelButton,
+.cancelBookingDialogConfirmButton {
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancelBookingDialogCancelButton {
+  background-color: #ffffff;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.cancelBookingDialogCancelButton:hover:not(:disabled) {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.cancelBookingDialogConfirmButton {
+  background-color: #dc2626;
+  color: #ffffff;
+  border: none;
+}
+
+.cancelBookingDialogConfirmButton:hover:not(:disabled) {
+  background-color: #b91c1c;
+}
+
+.cancelBookingDialogConfirmButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
