@@ -1,0 +1,39 @@
+/* CreateBookingPage Styles */
+
+.createBookingPage {
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
+.createBookingPageHeader {
+    background: linear-gradient(135deg, #f43f5e 0%, #ec4899 100%);
+    padding: 3rem 1rem;
+    color: #ffffff;
+}
+
+.createBookingPageHeaderContent {
+    max-width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.createBookingPageTitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+}
+
+.createBookingPageSubtitle {
+    font-size: 1.125rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.createBookingPageContent {
+    padding: 3rem 1rem;
+}
+
+.createBookingPageContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+}
