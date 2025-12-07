@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { PrismaClient } from '@prisma/client';
 import { createPropertyRoutes } from './routes/property.routes';
 import { errorHandler } from './middleware/error.middleware';
+import { createFavoriteRoutes } from './routes/favorite.routes';
 
 // Încarcă variabilele de mediu
 dotenv.config();
@@ -27,6 +28,7 @@ app.get('/health', (req, res) => {
 
 // Routes
 app.use('/properties', createPropertyRoutes(prisma));
+app.use('/favorites', createFavoriteRoutes(prisma));
 
 // Error Handler (trebuie să fie ultimul middleware!)
 app.use(errorHandler);

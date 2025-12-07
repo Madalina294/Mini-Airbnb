@@ -37,3 +37,15 @@ enum Status {
   RESERVED
   UNAVAILABLE  // Adaugă și unavailable pentru proprietăți dezactivate
 }
+
+model Favorite {
+  id         String   @id @default(uuid())
+  userId     String   // ID-ul user-ului care a adăugat la favorite
+  propertyId String   // ID-ul proprietății
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, propertyId]) // Un user nu poate adăuga aceeași proprietate de două ori
+  @@index([userId])              // Index pentru căutări rapide după user
+  @@index([propertyId])          // Index pentru căutări după proprietate
+  @@map("favorites")
+}

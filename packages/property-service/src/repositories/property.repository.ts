@@ -103,4 +103,15 @@ export class PropertyRepository {
     const property = await this.findById(propertyId);
     return property?.userId === userId;
   }
+
+    // Adaugă această metodă în PropertyRepository
+  async findByIds(ids: string[]) {
+    return await this.prisma.property.findMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
+  }
 }
