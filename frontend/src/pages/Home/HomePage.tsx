@@ -1,4 +1,4 @@
-import { useAuthStore, useLogout } from '../../features/auth';
+import { useAuthStore } from '../../features/auth';
 import { useNavigate } from 'react-router-dom';
 import './HomePage.css';
 
@@ -8,66 +8,10 @@ import './HomePage.css';
  */
 export const HomePage = () => {
   const { user, isAuthenticated } = useAuthStore();
-  const { logout } = useLogout();
   const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
 
   return (
     <div className="homePage">
-      {/* Header */}
-      <header className="header">
-        <div className="headerContainer">
-          <div className="headerContent">
-            {/* Logo */}
-            <div className="logoContainer" onClick={() => navigate('/home')}>
-              <div className="logoCircle">
-                <span className="logoLetter">M</span>
-              </div>
-              <h1 className="brandTitle">Mini-Airbnb</h1>
-            </div>
-
-            {/* Navigation */}
-            {isAuthenticated ? (
-              <div className="navContainer">
-                <div className="userInfo">
-                  <div className="userAvatar">
-                    <span className="userInitial">
-                      {user?.name?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase()}
-                    </span>
-                  </div>
-                  <span className="userName">{user?.name || user?.email}</span>
-                </div>
-                <button 
-                  onClick={handleLogout}
-                  className="btnSecondary"
-                >
-                  Logout
-                </button>
-              </div>
-            ) : (
-              <div className="navContainer">
-                <button 
-                  onClick={() => navigate('/login')}
-                  className="btnSecondary"
-                >
-                  Login
-                </button>
-                <button 
-                  onClick={() => navigate('/register')}
-                  className="btnPrimary"
-                >
-                  Sign Up
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </header>
-
       <main>
         {isAuthenticated ? (
           /* Dashboard pentru utilizatori autentificați */
