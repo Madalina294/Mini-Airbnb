@@ -1,0 +1,190 @@
+/* MyPropertiesPage Styles - Similar cu MyBookingsPage */
+
+.myPropertiesPage {
+    min-height: 100vh;
+    background-color: #f9fafb;
+}
+
+.myPropertiesHeader {
+    background: linear-gradient(135deg, #f43f5e 0%, #ec4899 100%);
+    padding: 3rem 1rem;
+    color: #ffffff;
+}
+
+.myPropertiesHeaderContent {
+    max-width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.myPropertiesTitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+}
+
+.myPropertiesSubtitle {
+    font-size: 1.125rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.myPropertiesContent {
+    padding: 3rem 1rem;
+}
+
+.myPropertiesContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.myPropertiesLoading,
+.myPropertiesError {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.myPropertiesLoading {
+    color: #6b7280;
+}
+
+.loadingSpinner {
+    width: 3rem;
+    height: 3rem;
+    border: 4px solid #e5e7eb;
+    border-top-color: #f43f5e;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.myPropertiesError {
+    color: #dc2626;
+}
+
+.myPropertiesRetryButton {
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #f43f5e;
+    color: #ffffff;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.myPropertiesRetryButton:hover {
+    background-color: #e11d48;
+    transform: translateY(-1px);
+}
+
+.myPropertiesEmpty {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.myPropertiesEmptyIcon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.myPropertiesEmpty h2 {
+    font-size: 1.5rem;
+    color: #111827;
+    margin: 0 0 0.5rem 0;
+}
+
+.myPropertiesEmpty p {
+    color: #6b7280;
+    margin: 0 0 2rem 0;
+}
+
+.myPropertiesCreateButton {
+    padding: 0.75rem 2rem;
+    background: linear-gradient(to right, #f43f5e, #ec4899);
+    color: #ffffff;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.myPropertiesCreateButton:hover {
+    background: linear-gradient(to right, #e11d48, #db2777);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.myPropertiesHeaderActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.myPropertiesCount {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.myPropertiesAddButton {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(to right, #f43f5e, #ec4899);
+    color: #ffffff;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.myPropertiesAddButton:hover {
+    background: linear-gradient(to right, #e11d48, #db2777);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.myPropertiesList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    .myPropertiesList {
+        grid-template-columns: 1fr;
+    }
+
+    .myPropertiesHeaderActions {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+
+    .myPropertiesAddButton {
+        width: 100%;
+    }
+}

@@ -1,4 +1,4 @@
-import { useMyBookings, useCancelBooking } from '../../features/bookings';
+import { useMyBookings } from '../../features/bookings';
 import { useAuthStore } from '../../features/auth';
 import { BookingCard } from '../../features/bookings/components/BookingCard/BookingCard';
 import { useEffect } from 'react';

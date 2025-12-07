@@ -1,34 +1,70 @@
-import { useState } from 'react';
-import { useCreateProperty } from '../../hooks/useProperties';
+import { useState, useEffect } from 'react';
+import { useCreateProperty, useUpdateProperty } from '../../hooks/useProperties';
 import { ImageUpload } from '../../../../components/ui/ImageUpload';
-import type { CreatePropertyRequest } from '../../api/property.api';
+import type { CreatePropertyRequest, UpdatePropertyRequest } from '../../api/property.api';
+import type { Property } from '../../types/property.types';
 import { useNavigate } from 'react-router-dom';
 import './CreatePropertyForm.css';
 
+interface CreatePropertyFormProps {
+  property?: Property; // Prop opțional - dacă există, formularul este în modul "edit"
+}
+
 /**
  * CreatePropertyForm Component
- * Formular pentru crearea unei proprietăți
+ * Formular pentru crearea sau editarea unei proprietăți
+ * Dacă property este furnizat, funcționează în modul "edit"
  */
-export const CreatePropertyForm = () => {
+export const CreatePropertyForm = ({ property }: CreatePropertyFormProps = {}) => {
   const navigate = useNavigate();
   const createPropertyMutation = useCreateProperty();
+  const updatePropertyMutation = useUpdateProperty();
 
-  const [formData, setFormData] = useState<CreatePropertyRequest>({
-    title: '',
-    description: '',
-    price: 0,
-    address: '',
-    city: '',
-    country: '',
-    bedrooms: 1,
-    bathrooms: 1,
-    maxGuests: 1,
-    facilities: [],
-    images: [],
+  // Determină dacă suntem în modul "edit"
+  const isEditMode = !!property;
+
+  // Tip extins pentru formData care include status pentru edit mode
+  type FormData = CreatePropertyRequest & { status?: Property['status'] };
+
+  // Inițializează formData - dacă property există, pre-populează datele
+  const [formData, setFormData] = useState<FormData>({
+    title: property?.title || '',
+    description: property?.description || '',
+    price: property?.price || 0,
+    address: property?.address || '',
+    city: property?.city || '',
+    country: property?.country || '',
+    bedrooms: property?.bedrooms || 1,
+    bathrooms: property?.bathrooms || 1,
+    maxGuests: property?.maxGuests || 1,
+    facilities: property?.facilities || [],
+    images: property?.images || [],
+    status: property?.status,
   });
 
   const [errors, setErrors] = useState<Partial<Record<keyof CreatePropertyRequest, string>>>({});
-  const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
+  const [selectedFacilities, setSelectedFacilities] = useState<string[]>(property?.facilities || []);
+
+  // Actualizează formData când property se schimbă (pentru edit mode)
+  useEffect(() => {
+    if (property) {
+      setFormData({
+        title: property.title,
+        description: property.description,
+        price: property.price,
+        address: property.address,
+        city: property.city,
+        country: property.country,
+        bedrooms: property.bedrooms,
+        bathrooms: property.bathrooms,
+        maxGuests: property.maxGuests,
+        facilities: property.facilities || [],
+        images: property.images || [],
+        status: property.status,
+      });
+      setSelectedFacilities(property.facilities || []);
+    }
+  }, [property]);
 
   // Lista de facilități disponibile
   const availableFacilities = [
@@ -140,17 +176,57 @@ export const CreatePropertyForm = () => {
       return;
     }
 
-    createPropertyMutation.mutate(formData, {
-      onSuccess: () => {
-        // Redirect către pagina de proprietăți după creare reușită
-        navigate('/properties');
-      },
-      onError: (error: any) => {
-        const errorMessage = error?.response?.data?.error?.message || 'Failed to create property';
-        setErrors({ title: errorMessage });
-      },
-    });
+    if (isEditMode && property) {
+      // Modul EDIT - trimite doar câmpurile modificate
+      const updateData: UpdatePropertyRequest & { status?: Property['status'] } = {
+        id: property.id,
+      };
+
+      // Adaugă doar câmpurile care au fost modificate
+      if (formData.title !== property.title) updateData.title = formData.title;
+      if (formData.description !== property.description) updateData.description = formData.description;
+      if (formData.price !== property.price) updateData.price = formData.price;
+      if (formData.address !== property.address) updateData.address = formData.address;
+      if (formData.city !== property.city) updateData.city = formData.city;
+      if (formData.country !== property.country) updateData.country = formData.country;
+      if (formData.bedrooms !== property.bedrooms) updateData.bedrooms = formData.bedrooms;
+      if (formData.bathrooms !== property.bathrooms) updateData.bathrooms = formData.bathrooms;
+      if (formData.maxGuests !== property.maxGuests) updateData.maxGuests = formData.maxGuests;
+      if (JSON.stringify(formData.facilities) !== JSON.stringify(property.facilities)) {
+        updateData.facilities = formData.facilities;
+      }
+      if (JSON.stringify(formData.images) !== JSON.stringify(property.images)) {
+        updateData.images = formData.images;
+      }
+      if (formData.status !== undefined && formData.status !== property.status) {
+        updateData.status = formData.status;
+      }
+
+      updatePropertyMutation.mutate(updateData, {
+        onSuccess: () => {
+          navigate(`/properties/${property.id}`);
+        },
+        onError: (error: any) => {
+          const errorMessage = error?.response?.data?.error?.message || 'Failed to update property';
+          setErrors({ title: errorMessage });
+        },
+      });
+    } else {
+      // Modul CREATE
+      createPropertyMutation.mutate(formData, {
+        onSuccess: () => {
+          navigate('/properties');
+        },
+        onError: (error: any) => {
+          const errorMessage = error?.response?.data?.error?.message || 'Failed to create property';
+          setErrors({ title: errorMessage });
+        },
+      });
+    }
   };
+
+  // Folosește mutation-ul corespunzător
+  const mutation = isEditMode ? updatePropertyMutation : createPropertyMutation;
 
   return (
     <form onSubmit={handleSubmit} className="createPropertyForm">
@@ -346,6 +422,32 @@ export const CreatePropertyForm = () => {
             )}
           </div>
         </div>
+
+        {/* Câmp pentru Status - doar în modul EDIT */}
+        {isEditMode && property && (
+          <div className="createPropertyFormGroup">
+            <label htmlFor="status" className="createPropertyFormLabel">
+              Status <span className="required">*</span>
+            </label>
+            <select
+              id="status"
+              name="status"
+              value={formData.status || property.status}
+              onChange={(e) => {
+                setFormData((prev) => ({ ...prev, status: e.target.value as Property['status'] }));
+              }}
+              className={`createPropertyFormInput ${(errors as any).status ? 'error' : ''}`}
+              required
+            >
+              <option value="AVAILABLE">Available</option>
+              <option value="RESERVED">Reserved</option>
+              <option value="UNAVAILABLE">Unavailable</option>
+            </select>
+            {(errors as any).status && (
+              <span className="createPropertyFormError">{(errors as any).status}</span>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="createPropertyFormSection">
@@ -383,26 +485,34 @@ export const CreatePropertyForm = () => {
         )}
       </div>
 
-      {createPropertyMutation.isError && (
+      {mutation.isError && (
         <div className="createPropertyFormErrorBox">
-          {createPropertyMutation.error?.message || 'An error occurred. Please try again.'}
+          {mutation.error?.message || 'An error occurred. Please try again.'}
         </div>
       )}
 
       <div className="createPropertyFormActions">
         <button
           type="button"
-          onClick={() => navigate('/properties')}
+          onClick={() => {
+            if (isEditMode && property) {
+              navigate(`/properties/${property.id}`);
+            } else {
+              navigate('/properties');
+            }
+          }}
           className="createPropertyFormButtonCancel"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className={`createPropertyFormButtonSubmit ${createPropertyMutation.isPending ? 'loading' : ''}`}
-          disabled={createPropertyMutation.isPending}
+          className={`createPropertyFormButtonSubmit ${mutation.isPending ? 'loading' : ''}`}
+          disabled={mutation.isPending}
         >
-          {createPropertyMutation.isPending ? 'Creating...' : 'Create Property'}
+          {mutation.isPending
+            ? (isEditMode ? 'Updating...' : 'Creating...')
+            : (isEditMode ? 'Update Property' : 'Create Property')}
         </button>
       </div>
     </form>

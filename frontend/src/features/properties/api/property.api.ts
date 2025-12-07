@@ -17,6 +17,7 @@ export interface CreatePropertyRequest {
 
 export interface UpdatePropertyRequest extends Partial<CreatePropertyRequest> {
   id: string;
+  status?: 'AVAILABLE' | 'RESERVED' | 'UNAVAILABLE';
 }
 
 export interface SearchPropertiesParams {
