@@ -8,7 +8,8 @@ import { BadRequestError } from '../utils/errors.utils';
 export const validate = (schema: z.ZodSchema) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.parse(req.body);
+      // Parsează și convertește datele, apoi le atribuie înapoi la req.body
+      req.body = schema.parse(req.body);
       next();
     } catch (error) {
       if (error instanceof ZodError) {
