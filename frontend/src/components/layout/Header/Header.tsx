@@ -110,6 +110,12 @@ export const Header = () => {
               >
                 My Bookings
               </button>
+              <button
+                className={`headerNavLink ${isActive('/favorites') ? 'active' : ''}`}
+                onClick={() => handleNavigation('/favorites')}
+              >
+                My Favorites
+              </button>
             </nav>
           )}
 
@@ -192,6 +198,13 @@ export const Header = () => {
                       >
                         <span>📅</span>
                         <span>My Bookings</span>
+                      </button>
+                      <button
+                        className="headerProfileDropdownItem"
+                        onClick={() => handleNavigation('/favorites')}
+                      >
+                        <span>❤️</span>
+                        <span>My Favorites</span>
                       </button>
                       <div className="headerProfileDropdownDivider"></div>
                       <button
@@ -293,6 +306,13 @@ export const Header = () => {
               >
                 <span>📅</span>
                 <span>My Bookings</span>
+              </button>
+              <button
+                className={`headerMobileMenuLink ${isActive('/favorites') ? 'active' : ''}`}
+                onClick={() => handleNavigation('/favorites')}
+              >
+                <span>❤️</span>
+                <span>My Favorites</span>
               </button>
               <div className="headerMobileMenuDivider"></div>
               <button

@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import type { Property } from '../../types/property.types';
+import { useCheckFavorite, useToggleFavorite } from '../../../favorites';
+import { useAuthStore } from '../../../auth';
 import './PropertyCard.css';
 
 interface PropertyCardProps {
@@ -12,9 +14,35 @@ interface PropertyCardProps {
  */
 export const PropertyCard = ({ property }: PropertyCardProps) => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuthStore();
+  
+  // Hook pentru verificarea dacă proprietatea este în favorite
+  const { data: isFavorite = false } = useCheckFavorite(property.id, isAuthenticated);
+  
+  // Hook pentru toggle favorite
+  const { toggle, isPending } = useToggleFavorite();
 
   const handleClick = () => {
     navigate(`/properties/${property.id}`);
+  };
+
+  const handleFavoriteClick = async (e: React.MouseEvent) => {
+    e.stopPropagation(); // Previne navigarea la detalii când se dă click pe butonul de favorite
+    
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+
+    try {
+      await toggle(property.id, isFavorite);
+    } catch (error: any) {
+      // Erorile 409 (Conflict) și 404 (Not Found) sunt deja gestionate în hook-uri
+      // Nu mai logăm aceste erori pentru a evita spam-ul în console
+      if (error?.response?.status !== 409 && error?.response?.status !== 404) {
+        console.error('Error toggling favorite:', error);
+      }
+    }
   };
 
   // Formatare preț
@@ -32,6 +60,18 @@ export const PropertyCard = ({ property }: PropertyCardProps) => {
     <div className="propertyCard" onClick={handleClick}>
       <div className="propertyCardImage">
         <img src={mainImage} alt={property.title} />
+        {/* Buton Favorite */}
+        {isAuthenticated && (
+          <button
+            className={`propertyCardFavorite ${isFavorite ? 'active' : ''}`}
+            onClick={handleFavoriteClick}
+            disabled={isPending}
+            aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+            title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+          >
+            {isFavorite ? '❤️' : '🤍'}
+          </button>
+        )}
         <div className={`propertyCardStatus ${property.status.toLowerCase()}`}>
           {property.status}
         </div>

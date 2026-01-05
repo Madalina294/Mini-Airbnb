@@ -75,6 +75,75 @@ export function createPropertyRoutes(): Router {
     }
   });
 
+  // GET /api/properties/favorites (necesită autentificare)
+  // IMPORTANT: Trebuie definită ÎNAINTE de /:id pentru că Express evaluează rutele în ordine
+  router.get('/favorites', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const token = req.headers.authorization?.replace('Bearer ', '');
+      const result = await HttpUtil.request(
+        propertyServiceUrl,
+        'GET',
+        '/favorites',
+        undefined,
+        token ? { Authorization: `Bearer ${token}` } : undefined
+      );
+      res.status(200).json(result);
+    } catch (error: any) {
+      next(error);
+    }
+  });
+
+  // POST /api/properties/favorites/:propertyId (necesită autentificare)
+  router.post('/favorites/:propertyId', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const token = req.headers.authorization?.replace('Bearer ', '');
+      const result = await HttpUtil.request(
+        propertyServiceUrl,
+        'POST',
+        `/favorites/${req.params.propertyId}`,
+        undefined,
+        token ? { Authorization: `Bearer ${token}` } : undefined
+      );
+      res.status(201).json(result);
+    } catch (error: any) {
+      next(error);
+    }
+  });
+
+  // DELETE /api/properties/favorites/:propertyId (necesită autentificare)
+  router.delete('/favorites/:propertyId', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const token = req.headers.authorization?.replace('Bearer ', '');
+      const result = await HttpUtil.request(
+        propertyServiceUrl,
+        'DELETE',
+        `/favorites/${req.params.propertyId}`,
+        undefined,
+        token ? { Authorization: `Bearer ${token}` } : undefined
+      );
+      res.status(200).json(result);
+    } catch (error: any) {
+      next(error);
+    }
+  });
+
+  // GET /api/properties/favorites/:propertyId/check (necesită autentificare)
+  router.get('/favorites/:propertyId/check', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const token = req.headers.authorization?.replace('Bearer ', '');
+      const result = await HttpUtil.request(
+        propertyServiceUrl,
+        'GET',
+        `/favorites/${req.params.propertyId}/check`,
+        undefined,
+        token ? { Authorization: `Bearer ${token}` } : undefined
+      );
+      res.status(200).json(result);
+    } catch (error: any) {
+      next(error);
+    }
+  });
+
   // GET /api/properties/:id (public)
   router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -138,73 +207,6 @@ export function createPropertyRoutes(): Router {
     }
   });
 
-  // POST /api/favorites/:propertyId
-  router.post('/favorites/:propertyId', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const token = req.headers.authorization?.replace('Bearer ', '');
-      const result = await HttpUtil.request(
-        propertyServiceUrl,
-        'POST',
-        `/favorites/${req.params.propertyId}`,
-        undefined,
-        token ? { Authorization: `Bearer ${token}` } : undefined
-      );
-      res.status(201).json(result);
-    } catch (error: any) {
-      next(error);
-    }
-  });
-
-  // DELETE /api/favorites/:propertyId
-  router.delete('/favorites/:propertyId', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const token = req.headers.authorization?.replace('Bearer ', '');
-      const result = await HttpUtil.request(
-        propertyServiceUrl,
-        'DELETE',
-        `/favorites/${req.params.propertyId}`,
-        undefined,
-        token ? { Authorization: `Bearer ${token}` } : undefined
-      );
-      res.status(200).json(result);
-    } catch (error: any) {
-      next(error);
-    }
-  });
-
-  // GET /api/favorites
-  router.get('/favorites', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const token = req.headers.authorization?.replace('Bearer ', '');
-      const result = await HttpUtil.request(
-        propertyServiceUrl,
-        'GET',
-        '/favorites',
-        undefined,
-        token ? { Authorization: `Bearer ${token}` } : undefined
-      );
-      res.status(200).json(result);
-    } catch (error: any) {
-      next(error);
-    }
-  });
-
-  // GET /api/favorites/:propertyId/check
-  router.get('/favorites/:propertyId/check', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const token = req.headers.authorization?.replace('Bearer ', '');
-      const result = await HttpUtil.request(
-        propertyServiceUrl,
-        'GET',
-        `/favorites/${req.params.propertyId}/check`,
-        undefined,
-        token ? { Authorization: `Bearer ${token}` } : undefined
-      );
-      res.status(200).json(result);
-    } catch (error: any) {
-      next(error);
-    }
-  });
 
   return router;
 }

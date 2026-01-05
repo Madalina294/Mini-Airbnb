@@ -10,6 +10,7 @@ import { PropertyDetailsPage } from '../pages/Properties/PropertyDetailsPage';
 import { CreateBookingPage } from '../pages/Bookings/CreateBookingPage';
 import { MyBookingsPage } from '../pages/Bookings/MyBookingsPage';
 import { MyPropertiesPage } from '../pages/Properties/MyPropertiesPage';
+import { MyFavoritesPage } from '../pages/Favorites/MyFavoritesPage';
 
 /**
  * Configurarea rutelor aplicației
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
       {
         path: 'properties/my',
         element: <MyPropertiesPage />,
+      },
+      {
+        path: 'favorites',
+        element: <MyFavoritesPage />,
       },
     ],
   },
